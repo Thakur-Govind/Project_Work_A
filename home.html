@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Farmer Portal</title>
+  <link rel="stylesheet" href="styles.css">
+<script src="cities.js" charset="utf-8"></script>
+</head>
+
+<body onload="initialload()">
+  <div class="starting_button">
+    <h1>Farmer Portal</h1>
+    <form class="" action="index.html" method="post">
+      <button type="button" onclick="useroption(1)" name="button">Login</button>
+      <button type="button" onclick="useroption(2)" name="register">Register</button><br><br>
+    </form>
+
+    <form class="user" action="index.html" method="post">
+
+      <input type="button" onclick="chooseradio(this.id)" name="user" value="Consumer" id="Consumer">
+      <input type="button" onclick="chooseradio(this.id)" name="user" value="Farmer" id="Farmer">
+      <input type="button" onclick="chooseradio(this.id)" name="user" value="Seller" id="Seller">
+
+    </form>
+  </div>
+
+
+
+
+  <div class="all_forms">
+    <div class="registration_div">
+
+      <form class="register" action="" method="post">
+        <h2 class='reg_head'>Registration</h2>
+        <input id="firstname" type="text" name="firstname" value="" placeholder="First Name">
+        <input id="middlename" type="text" name="middlename" value="" placeholder="Middle Name">
+        <input id="lastname" type="text" name="lastname" value="" placeholder="Last Name"><br><br>
+        <input id="DOB" type="date" name="dob" value="">
+        <label for="DOB">Date of Birth</label><br><br>
+        <input id="txtaadhar" type="text" name="" value="">
+        <label for="txtaadhar">Aadhar Card Number (12 or 16 digit)</label><br><br>
+        <input id="PAN" type="text" name="" value="">
+        <label for="PAN">PAN</label><br><br>
+        <input id="Mobile" type="tel" id="phone" name="phone" pattern="[0-9]{10}">
+        <label for="phone">Mobile Number:</label><br><br>
+        <input id="userID" type="text" name="" value="">
+        <label for="userID">User ID</label><br><br>
+        <input id="password_reg" type="password" name="password_reg" value="">
+        <label for="password_reg">Password</label><br><br>
+        <input id="conf_password_reg" type="password" name="conf_password_reg" value="">
+        <label for="conf_password_reg">Confirm Password</label><br><br>
+        <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" class="form-control" required></select><br><br>
+        <select  id ="state" class="form-control" required>
+        </select><br><br>
+        <script language="javascript">print_state("sts");</script>
+
+        <div class="consumer">
+
+          <select class="form-control" id="type_cus" name="type_cus">
+            <option value="Consumer">Consumer</option>
+            <option value="Retailer">Retailer</option>
+          </select> <br><br>
+        </div>
+        <div class="farmer">
+          <select name="crop" id="crop" class="form-control" multiple>
+            <option value="Select-Commodity">Select-Commodity</option>
+            <option value="Amaranthus">Amaranthus</option>
+            <option value="Amla(Nelli Kai)">Amla(Nelli Kai)</option>
+            <option value="Amphophalus">Amphophalus</option>
+            <option value="Arhar (Tur/Red Gram)(Whole)">Arhar (Tur/Red Gram)(Whole)</option>
+            <option value="Arhar Dal(Tur Dal)">Arhar Dal(Tur Dal)</option>
+            <option value="Antawala">Antawala</option>
+            <option value="Apple">Apple</option>
+            <option value="Ashgourd">Ashgourd</option>
+            <option value="Arecanut(Betelnut/Supari)">Arecanut(Betelnut/Supari)</option>
+            <option value="Banana">Banana</option>
+            <option value="Banana - Green">Banana - Green</option>
+            <option value="Bajra(Pearl Millet/Cumbu)">Bajra(Pearl Millet/Cumbu)</option>
+            <option value="Barley (Jau)	">Barley (Jau)</option>
+            <option value="Beans">Beans</option>
+            <option value="Bengal Gram(Gram)(Whole)">Bengal Gram(Gram)(Whole)</option>
+            <option value="Bengal Gram Dal (Chana Dal)">Bengal Gram Dal (Chana Dal)</option>
+            <option value="Beetroot">Beetroot</option>
+            <option value="Bhindi(Ladies Finger)">Bhindi(Ladies Finger)</option>
+            <option value="Bitter gourd">Bitter gourd</option>
+            <option value="Bottle gourd">Bottle gourd</option>
+            <option value="Brinjal">Brinjal</option>
+            <option value="Black Gram (Urd Beans)(Whole)">Black Gram (Urd Beans)(Whole)</option>
+            <option value="Black pepper">Black pepper</option>
+            <option value="Bunch Beans">Bunch Beans</option>
+            <option value="Cashewnuts">Cashewnuts</option>
+            <option value="Cabbage">Cabbage</option>
+            <option value="Castor Seed">Castor Seed</option>
+            <option value="Capsicum">Capsicum</option>
+            <option value="Carrot">Carrot</option>
+            <option value="Cauliflower">Cauliflower</option>
+            <option value="Chapparad Avare">Chapparad Avare</option>
+            <option value="Chikoos(Sapota)">Chikoos(Sapota)</option>
+            <option value="Chilly Capsicum">Chilly Capsicum</option>
+            <option value="Cluster beans">Cluster beans</option>
+            <option value="Cucumbar(Kheera)">Cucumbar(Kheera)</option>
+            <option value="Cummin Seed(Jeera)">Cummin Seed(Jeera)</option>
+            <option value="Coconut">Coconut</option>
+            <option value="Coconut Seed">Coconut Seed</option>
+            <option value="Coconut Oil">Coconut Oil</option>
+            <option value="Coffee">Coffee</option>
+            <option value="Coriander(Leaves)">Coriander(Leaves)</option>
+            <option value="Colacasia">Colacasia</option>
+            <option value="Copra">Copra</option>
+            <option value="Corriander seed">Corriander seed</option>
+            <option value="Cotton">Cotton</option>
+            <option value="Cowpea(Veg)">Cowpea(Veg)</option>
+            <option value="Cowpea (Lobia/Karamani)">Cowpea (Lobia/Karamani)</option>
+            <option value="Dry Chillies">Dry Chillies</option>
+            <option value="Duster Beans">Duster Beans</option>
+            <option value="Drumstick">Drumstick</option>
+            <option value="Elephant Yam (Suran)">Elephant Yam (Suran)</option>
+            <option value="Field Pea">Field Pea</option>
+            <option value="French Beans (Frasbean)">French Beans (Frasbean)</option>
+            <option value="Foxtail Millet(Navane)">Foxtail Millet(Navane)</option>
+            <option value="Garlic">Garlic</option>
+            <option value="Ghee">Ghee</option>
+            <option value="Ginger(Green)">Ginger(Green)	</option>
+            <option value="Ginger(Dry)">Ginger(Dry)</option>
+            <option value="Green Chilli">Green Chilli</option>
+            <option value="Guar">Guar</option>
+            <option value="Gur(Jaggery)">Gur(Jaggery)</option>
+            <option value="Grapes">Grapes</option>
+            <option value="Green Gram (Moong)(Whole)">Green Gram (Moong)(Whole)</option>
+            <option value="Green Gram Dal (Moong Dal)">Green Gram Dal (Moong Dal)</option>
+            <option value="Green Chilli">Green Chilli</option>
+            <option value="Gram Raw(Chholia)">Gram Raw(Chholia)</option>
+            <option value="Green Avare (W)">Green Avare (W)</option>
+            <option value="Groundnut">Groundnut</option>
+            <option value="Groundnut pods (raw)">Groundnut pods (raw)</option>
+            <option value="Indian Beans (Seam)">Indian Beans (Seam)</option>
+            <option value="Jack Fruit">Jack Fruit</option>
+            <option value="Jowar(Sorghum)">Jowar(Sorghum)</option>
+            <option value="Jute">Jute</option>
+            <option value="Karbuja(Musk Melon)">Karbuja(Musk Melon)</option>
+            <option value="Knool Khol">Knool Khol</option>
+            <option value="Kulthi(Horse Gram)">Kulthi(Horse Gram)</option>
+            <option value="Leafy Vegetable">Leafy Vegetable</option>
+            <option value="Lemon">Lemon</option>
+            <option value="Lentil (Masur)(Whole)">Lentil (Masur)(Whole)</option>
+            <option value="Lime">Lime</option>
+            <option value="Little gourd (Kundru)">Little gourd (Kundru)</option>
+            <option value="Long Melon(Kakri)">Long Melon(Kakri)</option>
+            <option value="Mango">Mango</option>
+            <option value="Mango (Raw-Ripe)">Mango (Raw-Ripe)</option>
+            <option value="Mashrooms">Mashrooms</option>
+            <option value="Mesta">Mesta</option>
+            <option value="Methi(Leaves)">Methi(Leaves)</option>
+            <option value="Methi Seeds">Methi Seeds</option>
+            <option value="Mousambi(Sweet Lime)">Mousambi(Sweet Lime)</option>
+            <option value="Maize">Maize</option>
+            <option value="Mahua">Mahua</option>
+            <option value="Masur Dal">Masur Dal</option>
+            <option value="	Mustard">Mustard</option>
+            <option value="Mustard Oil">Mustard Oil</option>
+            <option value="Neem Seed">Neem Seed</option>
+            <option value="Onion">Onion</option>
+            <option value="Onion Green">Onion Green</option>
+            <option value="Opium">Opium</option>
+            <option value="Orange">Orange</option>
+            <option value="Papaya">Papaya</option>
+            <option value="Papaya (Raw)">Papaya (Raw)</option>
+            <option value="Peach">Peach</option>
+            <option value="Peas Wet">Peas Wet</option>
+            <option value="Peas(Dry)">	Peas(Dry)</option>
+            <option value="Peas cod">Peas cod</option>
+            <option value="Pegeon Pea (Arhar Fali)">Pegeon Pea (Arhar Fali)</option>
+            <option value="Plum">Plum</option>
+            <option value="Pomegranate">Pomegranate</option>
+            <option value="Pointed gourd (Parval)">Pointed gourd (Parval)</option>
+            <option value="Potato">Potato</option>
+            <option value="Paddy(Dhan)(Common)">Paddy(Dhan)(Common)</option>
+            <option value="Paddy(Dhan)(Basmati)">Paddy(Dhan)(Basmati)</option>
+            <option value="Pineapple">Pineapple</option>
+            <option value="Pepper ungarbled">Pepper ungarbled</option>
+            <option value="Pumpkin">Pumpkin</option>
+            <option value="Raddish">Raddish</option>
+            <option value="Ragi (Finger Millet)">Ragi (Finger Millet)</option>
+            <option value="Rice">Rice</option>
+            <option value="Ridgeguard(Tori)">Ridgeguard(Tori)</option>
+            <option value="Round gourd">Round gourd</option>
+            <option value="Rubber">Rubber</option>
+            <option value="Sweet Potato">Sweet Potato</option>
+            <option value="Sesamum(Sesame,Gingelly,Til)">Sesamum(Sesame,Gingelly,Til)</option>
+            <option value="Seemebadnekai">Seemebadnekai</option>
+            <option value="Snakeguard">Snakeguard</option>
+            <option value="Suvarna Gadde">Suvarna Gadde</option>
+            <option value="Sweet Pumpkin">Sweet Pumpkin</option>
+            <option value="Soyabean">Soyabean</option>
+            <option value="Soanf">Soanf</option>
+            <option value="Spinach">Spinach</option>
+            <option value="Sponge gourd">Sponge gourd</option>
+            <option value="Sunflower">Sunflower</option>
+            <option value="Sugarcane">Sugarcane</option>
+            <option value="Tea">Tea</option>
+            <option value="Tinda">Tinda</option>
+            <option value="Thondekai">Thondekai</option>
+            <option value="Tobacco">Tobacco</option>
+            <option value="Tomato">Tomato</option>
+            <option value="Turmeric">Turmeric</option>
+            <option value="Water Melon">Water Melon</option>
+            <option value="Wheat">Wheat</option>
+            <option value="White Peas">White Peas</option>
+        </select>
+        <label for="crop">Select all crops you grow<br>(Hold ctrl and select to select multiple options):</label><br><br>
+          <br>
+          <select class="form-control" id="type_farm" name="type_farm">
+            <option value="food">Food</option>
+            <option value="commercial">Commercial</option>
+            <option value="both">Both</option>
+          </select>
+          <label for="type_farm">Farmer Type:</label><br><br>
+        </div>
+        <div class="seller">
+
+
+          <select class="form-control" id="type_sel" name="type_sel">
+            <option value="Pesticide">Pesticide</option>
+            <option value="Fertilizer">Fertilizer</option>
+            <option value="Seed">Seed</option>
+          </select><br><br>
+        </div>
+        <button type="" onclick="return validation()" name="button">Register</button>
+        <!-- <input type="submit" onclick="validation()" name="" value="Register"> -->
+      </form><br>
+    </div>
+    <div class="login_div">
+      <form class="login" action="index.html" method="post">
+        <h2 class="log_head">Login</h2>
+        <input id="userID" type="text" name="" value="">
+        <label for="userID">User ID</label><br><br>
+        <input id="password_reg" type="password" name="password_reg" value="">
+        <label for="password_reg">Password</label><br><br>
+        <button type="submit" name="button">Login</button>
+      </form>
+    </div>
+  </div>
+
+
+  <script src="index.js" charset="utf-8"></script>
+</body>
+
+</html>
