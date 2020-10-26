@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Farmer Portal</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<script src="{% static 'js/cities.js' %}" charset="utf-8"></script>
+</head>
+
+<body onload="initialload()">
+  <div class="starting_button">
+    <h1>Farmer Portal</h1>
+    <form class="" action="index.html" method="post">
+      <button type="button" onclick="useroption(1)" name="button">Login</button>
+      <button type="button" onclick="useroption(2)" name="register">Register</button><br><br>
+    </form>
+
+    <form class="user" action="index.html" method="post">
+
+      <input type="button" onclick="chooseradio(this.id)" name="user" value="Consumer" id="Consumer">
+      <input type="button" onclick="chooseradio(this.id)" name="user" value="Farmer" id="Farmer">
+      <input type="button" onclick="chooseradio(this.id)" name="user" value="Seller" id="Seller">
+
+    </form>
+  </div>
+
+
+
+
+  <div class="all_forms">
+    <div class="registration_div">
+
+      <form class="register" action="/register" method="post">{% csrf_token %}
+        <h2 class='reg_head'>Registration</h2>
+        <input id="firstname" type="text" name="firstname" value="" placeholder="First Name">
+        <input id="middlename" type="text" name="middlename" value="" placeholder="Middle Name">
+        <input id="lastname" type="text" name="lastname" value="" placeholder="Last Name"><br><br>
+        <input id="DOB" type="date" name="dob" value="">
+        <label for="DOB">Date of Birth</label><br><br>
+        <input id="txtaadhar" type="text" name="aadhaar" value="">
+        <label for="txtaadhar">Aadhar Card Number (12 or 16 digit)</label><br><br>
+        <input id="PAN" type="text" name="pan" value="">
+        <label for="PAN">PAN</label><br><br>
+        <input id="Mobile" type="tel" id="phone" name="phone" pattern="[0-9]{10}">
+        <label for="phone">Mobile Number:</label><br><br>
+        <input id="userID" type="text" name="username" value="">
+        <label for="userID">User ID</label><br><br>
+        <input id="email" type="email" name="email" value="">
+        <label for="email">Email ID</label><br><br>
+        <input id="password_reg" type="password" name="password_reg" value="">
+        <label for="password_reg">Password</label><br><br>
+        <input id="conf_password_reg" type="password" name="conf_password_reg" value="">
+        <label for="conf_password_reg">Confirm Password</label><br><br>
+        <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" class="form-control" required></select><br><br>
+        <select  id ="state" name = "city" class="form-control" required>
+        </select><br><br>
+        <script language="javascript">print_state("sts");</script>
+
+        <div class="consumer">
+
+          <select class="form-control" id="type_cus" name="type_cus">
+            <option value="Consumer">Consumer</option>
+            <option value="Retailer">Retailer</option>
+          </select> <br><br>
+        </div>
+        <div class="farmer">
+          <br>
+          <select class="form-control" id="type_farm" name="type_farm">
+            <option value="food">Food</option>
+            <option value="commercial">Commercial</option>
+            <option value="both">Both</option>
+          </select>
+          <label for="type_farm">Farmer Type:</label><br><br>
+        </div>
+        <div class="seller">
+
+
+          <select class="form-control" id="type_sel" name="type_sel">
+            <option value="Pesticide">Pesticide</option>
+            <option value="Fertilizer">Fertilizer</option>
+            <option value="Seed">Seed</option>
+          </select><br><br>
+        </div>
+        <!--<button type="" onclick="return validation()" name="button">Register</button>-->
+        <input type="submit" value="Register"> 
+      </form><br>
+    </div>
+    <div class="login_div">
+      <form class="login" action="/user_login" method="post">{% csrf_token %}
+        <h2 class="log_head">Login</h2>
+        <input id="userID" type="text" name="username" value="">
+        <label for="userID">User ID</label><br><br>
+        <input id="password_reg" type="password" name="password_reg" value="">
+        <label for="password_reg">Password</label><br><br>
+        <!--<button type="submit" name="button">Login</button>-->
+        <input type="submit" value="Login">
+      </form>
+    </div>
+  </div>
+
+
+  <script src="{% static 'js/index.js' %}" charset="utf-8"></script>
+</body>
+
+</html>
