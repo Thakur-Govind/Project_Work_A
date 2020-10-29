@@ -42,3 +42,27 @@ class Consumer(models.Model):
     )
     consumer_type = models.CharField(max_length=20, choices=consumer_choices, default="Consumer")
 
+class Crops(models.Model):
+    name = models.CharField(max_length=200)
+    farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE)
+    state = models.CharField(max_length=200)
+    price = models.IntegerField()
+    quantity = models.IntegerField()
+    crop_choice = (
+        ("Edible","Edible"),
+        ("Commercial","Commercial")
+    )
+    crop_type = models.CharField(max_length=20,choices=crop_choice, default="Edible")
+
+class Raw(models.Model):
+    name = models.CharField(max_length=200)
+    seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
+    price = models.IntegerField()
+    state = models.CharField(max_length=200)
+    quantity = models.IntegerField()
+    raw_choice = (
+        ("Seeds","Seeds"),
+        ("Pesticides","Pesticides"),
+        ("Fertilizers", "Fertilizers")
+    ) 
+    raw_type = models.CharField(max_length=20, choices=raw_choice, default="Seeds")
