@@ -1,0 +1,19 @@
+td{
+  padding: 5px;
+}
+
+.qty-section{
+  display: inline-block;
+  border-right:solid 1px black;
+  width:47%;
+  height: 100vh;
+  padding: 10px;
+}
+
+.pay-section{
+  display: inline-block;
+  float: right;
+  width:47%;
+  height: 100vh;
+  padding:20px;
+}

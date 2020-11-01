@@ -1,0 +1,150 @@
+body {
+  overflow-y: hidden;
+}
+
+.starting_button {
+  display: inline-block;
+  float: left;
+  width: 35%;
+  height: 100vh;
+  text-align: center;
+  margin-top: 80px;
+  margin-left: 50px;
+}
+
+.all_forms {
+  background: rgba(226, 231, 230, 0.5);
+  display: inline-block;
+  float: right;
+  width: 500px;
+  height: 100vh;
+  margin-top: 65px;
+  margin-right: 120px;
+  margin-left: 0px;
+}
+
+.login_div {
+  margin-left: 30%;
+}
+
+.login_div input {
+  width: 200px;
+  height: 30px;
+  border-radius: 2px;
+  border: 2px solid black;
+}
+
+.login_div input:focus {
+  border: 3px solid darkgreen;
+  background-color: rgba(96, 226, 113, 0.5);
+}
+
+.login_div label {
+  font-size: 17px;
+  font-family: Impact, Charcoal, sans-serif;
+}
+
+.login_button {
+  color: black;
+  border-radius: 10px;
+  font-weight: 800;
+  background-color: rgba(39, 105, 48, 0.7);
+  align-items: center;
+}
+
+.login_button:hover {
+  background-color: rgba(39, 105, 48);
+  color: black;
+  transition: transform 0.2s ease-in-out;
+  transform: scale(1.08) !important;
+}
+
+.log_head {
+  font-family: Impact, Charcoal, sans-serif;
+}
+
+.registration_div {
+  margin-left: 10%;
+}
+
+body {
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0.4)
+    ),
+    url("farmer1.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+h1 {
+  font-size: 40px;
+  font-family: Impact, Charcoal, sans-serif;
+}
+
+button,
+.user_selection {
+  color: black;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 10px;
+  font-weight: 800;
+  background-color: rgba(39, 105, 48, 0.7);
+  margin: 10px;
+}
+
+button:hover {
+  background-color: black;
+  color: white;
+  border: cornsilk;
+  transition: transform 0.2s ease-in-out;
+  transform: scale(1.08) !important;
+}
+
+.user_selection:hover {
+  background-color: black;
+  color: white;
+  border: cornsilk;
+  transition: transform 0.2s ease-in-out;
+  transform: scale(1.08) !important;
+}
+
+.register input,
+select {
+  width: 165px;
+  height: 25px;
+  border: 1px solid black;
+}
+
+.register input:focus {
+  border: 2px solid darkgreen;
+  background-color: rgba(96, 226, 113, 0.3);
+}
+
+.register label {
+  font-size: 17px;
+  font-family: Impact, Charcoal, sans-serif;
+}
+
+.register_button {
+  color: black;
+  border-radius: 10px;
+  font-weight: 800;
+  background-color: rgba(39, 105, 48, 0.7);
+  align-items: center;
+}
+
+.register_button:hover {
+  background-color: rgba(39, 105, 48);
+  color: black;
+  transition: transform 0.2s ease-in-out;
+  transform: scale(1.08) !important;
+}
+
+.reg_head {
+  font-family: Impact, Charcoal, sans-serif;
+}

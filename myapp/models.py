@@ -25,6 +25,9 @@ class Farmer(models.Model):
     )
     farmer_type = models.CharField(max_length=20, choices=Farmer_choices,default="Food")
 
+    def __str__(self):
+        return self.user.username
+
 class Seller(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='seller')
     seller_choice = (
@@ -34,6 +37,9 @@ class Seller(models.Model):
     )
     seller_type = models.CharField(max_length= 20, choices=seller_choice, default="Pesticide")
 
+    def __str__(self):
+        return self.user.username
+
 class Consumer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True, related_name='consumer')
     consumer_choices = (
@@ -41,6 +47,9 @@ class Consumer(models.Model):
         ("Retailer","Retailer")
     )
     consumer_type = models.CharField(max_length=20, choices=consumer_choices, default="Consumer")
+
+    def __str__(self):
+        return self.user.username
 
 class Crops(models.Model):
     name = models.CharField(max_length=200)
@@ -54,6 +63,9 @@ class Crops(models.Model):
     )
     crop_type = models.CharField(max_length=20,choices=crop_choice, default="Edible")
 
+    def __str__(self):
+        return self.name + "-" + self.farmer.user.username
+
 class Raw(models.Model):
     name = models.CharField(max_length=200)
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
@@ -66,3 +78,6 @@ class Raw(models.Model):
         ("Fertilizers", "Fertilizers")
     ) 
     raw_type = models.CharField(max_length=20, choices=raw_choice, default="Seeds")
+
+    def __str__(self):
+        return self.name + "-" + self.seller.user.username

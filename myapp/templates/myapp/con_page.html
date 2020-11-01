@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Consumer Page</title>
+    <!--<link rel="stylesheet" href="consumerstyle.css">-->
+    <!--<script src="cities.js" charset="utf-8"></script>-->
+  </head>
+  <body >
+      <h2>Consumer Name: {{user.username}}</h2>
+      <form method="get">
+        Crop : <input name="crop" type="text"><br>
+        State: <input name="state" type="text">
+        <input type="button" value="Search Farmer" onclick="selected_crops(this.form)"><br><br>
+      </form>
+
+
+
+      <table border="1px solid black" id="farmer_table">
+      <tr>
+        <th>Farmer Firstname</th>
+        <th>Farmer Middlename</th>
+        <th>Farmer Lastname</th>
+        <th>Price per Kg</th>
+        <th>Total available quantity</th>
+        <th>City</th>
+      </tr>
+
+      <!--<tr>
+
+          <td>Chajulal</td>
+          <td>Manoharilal</td>
+          <td>Yadav</td>
+          <td>2345678911</td>
+          <td>Nagpur</td>
+
+          <td><a href="con_buy_farm.html">Buy from this farmer</a></td>
+
+      </tr>
+      <tr>
+
+          <td>Manulal</td>
+          <td>Jawarilal</td>
+          <td>Gupta</td>
+          <td>2345345611</td>
+          <td>Nashik</td>
+          <td><a href="con_buy_farm.html">Buy from this farmer</a></td>
+
+      </tr>-->
+      </table>
+    <div class="all_crops">
+      <p></p>
+    </div>
+
+
+    <script>
+    	all_crops();
+    	function all_crops() {
+    		fetch('http://127.0.0.1:8000/all_crops')
+    		.then((resp)=>resp.json())
+    		.then(function(data) {
+          //console.log(data);
+          let div_el = document.querySelector('.all_crops');
+          //console.log(div_el);
+          data.forEach(function(obj) {
+            //console.log(obj);
+            let info = `${obj.name}  ${obj.price}/kg  ${obj.farmer.user.username}`;
+            let p = document.createElement("p");
+            p.innerHTML = info;
+            //console.log(p);
+            div_el.appendChild(p);
+          });
+          
+    		})
+      }
+      
+
+      function selected_crops(form) {
+        //e.preventDefault();
+        let crop = form.crop.value;
+        let state = form.state.value;
+        fetch(`http://127.0.0.1:8000/selected_crops?crop=${crop}&state=${state}`)
+        .then((resp)=>resp.json())
+        .then(function(data) {
+          //console.log(data);
+          let t = document.getElementById('farmer_table');
+          data.forEach(function(crop) {
+            console.log(crop.farmer.user.first_name);
+            let tr = document.createElement("tr");
+            let td1 = document.createElement("td");
+            let td2 = document.createElement("td");
+            let td3 = document.createElement("td");
+            let td4 = document.createElement("td");
+            let td5 = document.createElement("td");
+            let td6 = document.createElement("td");
+            td1.innerHTML = crop.farmer.user.first_name;
+            tr.appendChild(td1);
+            td2.innerHTML = crop.farmer.user.mid_name;
+            tr.appendChild(td2);
+            td3.innerHTML = crop.farmer.user.last_name;
+            tr.appendChild(td3);
+            td4.innerHTML = crop.price;
+            tr.appendChild(td4);
+            td5.innerHTML = crop.quantity;
+            tr.appendChild(td5);
+            td6.innerHTML = crop.farmer.user.city;
+            tr.appendChild(td6);
+            t.appendChild(tr);
+
+          })
+        })
+      }
+    </script>
+
+  </body>
+</html>

@@ -1,7 +1,10 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .models import *
 from django.contrib.auth.models import auth
+from rest_framework.views import APIView
+from myapp.serializers import CropSerializer
 #from django.http import HttpResponse
+from rest_framework.response import Response
 from django.contrib import messages
 # Create your views here.
 def register(request):
@@ -53,7 +56,7 @@ def register(request):
 			messages.info(request,"Email taken")
 			return redirect('register')
 	else:
-		return render(request, 'myapp/home.html')
+		return render(request, 'myapp/home_up.html')
 
 def user_login(request):
 	if request.method == 'POST':
@@ -67,7 +70,7 @@ def user_login(request):
 			messages.info(request,"email or password incorrect")
 			return redirect('user_login')
 	else:
-		return render(request,'myapp/home.html')
+		return render(request,'myapp/home_up.html')
 
 
 def user_logout(request):
@@ -76,6 +79,30 @@ def user_logout(request):
 
 def home_page(request):
 	if request.user.is_authenticated:
-		return HttpResponse("Hello, {}".format(request.user))
+		return render(request,'myapp/con_page.html')
 	else:
 		return HttpResponse("Not logged in.")
+
+class CropListView(APIView):
+	def get(self,request):
+		crops = Crops.objects.all()
+		serializer = CropSerializer(crops, many=True)
+		return Response(serializer.data)
+
+class SelectedCrops(APIView):
+
+	def get(self, request):
+		crop = request.query_params.get('crop',None)
+		state = request.query_params.get('state',None)
+
+		if crop is not None and state is not None:
+			crops = Crops.objects.filter(name=crop, state=state)
+			serializer = CropSerializer(crops, many=True)
+			return Response(serializer.data)
+
+class CropDetail(APIView):
+
+	def get(self,request,id):
+		crop = Crops.objects.get(id=id)
+		serializer = CropSerializer(crop)
+		return Response(serializer.data)
