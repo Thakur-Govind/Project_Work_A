@@ -81,3 +81,18 @@ class Raw(models.Model):
 
     def __str__(self):
         return self.name + "-" + self.seller.user.username
+
+class FarmerOrders(models.Model):
+    farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE)
+    consumer = models.ForeignKey(Consumer, on_delete=models.CASCADE)
+    item_ordered = models.CharField(max_length=1000)
+    item_quantity = models.IntegerField()
+    order_total = models.IntegerField()
+class SellerOrders(models.Model):
+    farmer = models.ForeignKey(Farmer, on_delete=models.CASCADE)
+    seller = models.ForeignKey(Seller, on_delete=models.CASCADE)
+    item_ordered = models.CharField(max_length=1000)
+    item_quantity = models.IntegerField()
+    order_total = models.IntegerField()
+
+

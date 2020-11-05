@@ -1,8 +1,8 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect,get_object_or_404
 from .models import *
 from django.contrib.auth.models import auth
 from rest_framework.views import APIView
-from myapp.serializers import CropSerializer
+from myapp.serializers import CropSerializer,RawSerializer,FarmerOrderSerializer,SellerOrderSerializer
 #from django.http import HttpResponse
 from rest_framework.response import Response
 from django.contrib import messages
@@ -89,6 +89,21 @@ class CropListView(APIView):
 		serializer = CropSerializer(crops, many=True)
 		return Response(serializer.data)
 
+def consumer_buy(request,cropid,quant):
+	crop = get_object_or_404(Crops, pk = cropid)
+	crop.quantity -= quant
+	if crop.quantity <=0:
+		print("Stock now zero")
+	crop.save()
+	order = FarmerOrders()
+	order.consumer = request.user
+	order.farmer = crop.farmer
+	order.item_ordered = crop.name
+	order.item_quantity = quant
+	order.order_total = quant*crop.price
+	order.save()
+	return HttpResponse("Items Sold Successfully")
+
 class SelectedCrops(APIView):
 
 	def get(self, request):
@@ -109,3 +124,52 @@ class CropDetail(APIView):
 
 def crop_detail_page(request,id):
 	return render(request,'myapp/con_buy_farm.html',{'id':id})
+##################################################FARMER VIEWS######################################################################
+def create_crop(request):
+	ncrop = Crops()
+	ncrop.name = request.POST['name']
+	ncrop.farmer = request.user
+	ncrop.state = request.user.User.state
+	ncrop.price = request.user.POST['price']
+	ncrop.quantity = request.user.POST['quantity']
+	ncrop.save()
+	return HttpResponse("New Crop Added successfully")
+
+def add_quantity(request):
+	crop = Crops.objects.filter(name = request.POST['name'])
+	crop.quantity += request.POST['quantity']
+	return HttpResponse("Crops updated successfully")
+#######################################################FARMER VIEWS END##################################################################
+
+#######################################################SELLER VIEWS START################################################################
+class RawListView(APIView):
+	def get(self,request):
+		raw = Raw.objects.all()
+		serializer = RawSerializer(raw,many=True)
+		return Response(serializer.data)
+
+def farmer_buy(request,id,quant):
+	item = get_object_or_404(Raw,pk=id)
+	item.quantity -= quant
+	item.save()
+	order = SellerOrders()
+	order.seller = item.seller
+	order.farmer = request.user
+	order.item_ordered = item.name
+	order.item_quantity = quant
+	order.order_total = quant*item.price
+	order.save()
+	
+# def create_raw(request):
+
+class FarmerOrderView(APIView):
+	def get(self,request):
+		f_orders = FarmerOrders.objects.all()
+		serializer = FarmerOrderSerializer(f_orders,many = True)
+		return  Response(serializer.data)
+
+class SellerOrderView(APIView):
+	def get(self,request):
+		s_orders = SellerOrders.objects.all()
+		serializer = SellerOrderSerializer(s_orders,many=True)
+		return Response(serializer.data) 
