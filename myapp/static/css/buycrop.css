@@ -1,12 +1,17 @@
-td {
-  padding: 5px;
+.pay-section {
+  position: fixed;
+  background: rgba(255, 255, 255, 0.8);
+  margin: 200px;
+  padding: 20px;
 }
 
-h2 {
-  font-size: xx-large;
-  margin-top: 50px;
-  margin-left: 33%;
-  font-family: Impact, Charcoal, sans-serif;
+.qty-section {
+  background: rgba(255, 255, 255, 0.8);
+  display: inline-block;
+  width: 35%;
+  height: 70vh;
+  padding: 25px;
+  margin-top: 100px;
 }
 
 body {
@@ -24,47 +29,38 @@ body {
   padding: 10px;
 }
 
-span {
-  font-size: 17px;
-  font-family: Impact, Charcoal, sans-serif;
-}
-
-input {
+#quantity {
   width: 165px;
   height: 25px;
   border: 1px solid black;
 }
 
-input:focus {
+#quantity:focus {
   border: 2px solid darkgreen;
   background-color: rgba(96, 226, 113, 0.3);
 }
 
-.search_farmer {
+.payment,
+.buy {
   color: black;
-  border-radius: 5px;
+  border-radius: 10px;
   font-weight: 800;
   background-color: rgba(39, 105, 48, 0.7);
   align-items: center;
-  width: 150px;
-  margin-left: 85px;
 }
 
-.search_farmer:hover {
-  background-color: rgba(39, 105, 48);
-  color: black;
+.payment:hover,
+.buy:hover {
   transition: transform 0.2s ease-in-out;
   transform: scale(1.08) !important;
 }
 
-form {
-  background: rgba(226, 231, 230, 0.5);
-  padding-left: 12px;
-  padding-right: 12px;
-  padding-top: 12px;
-  padding-bottom: 8px;
+.buy {
+  width: 100px;
 }
 
-table {
-  background-color: rgba(255, 255, 255, 0.7);
+h3,
+h2 {
+  font-size: 20px;
+  font-family: sans-serif;
 }

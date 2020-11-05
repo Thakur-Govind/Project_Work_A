@@ -106,3 +106,6 @@ class CropDetail(APIView):
 		crop = Crops.objects.get(id=id)
 		serializer = CropSerializer(crop)
 		return Response(serializer.data)
+
+def crop_detail_page(request,id):
+	return render(request,'myapp/con_buy_farm.html',{'id':id})

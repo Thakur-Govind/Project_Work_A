@@ -18,4 +18,4 @@ class CropSerializer(serializers.ModelSerializer):
     farmer = FarmerSerializer()
     class Meta:
         model = Crops
-        fields = ['name','farmer','state','price','quantity','crop_type']
+        fields = ['id','name','farmer','state','price','quantity','crop_type']
