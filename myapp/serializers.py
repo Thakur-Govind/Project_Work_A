@@ -31,11 +31,14 @@ class RawSerializer(serializers.ModelSerializer):
         model = Raw
         fields = ['name','seller','state','price','quantity','raw_type']
 class FarmerOrderSerializer(serializers.ModelSerializer):
+    farmer = FarmerSerializer()
     class Meta:
         model = FarmerOrders
         fields = ['farmer','consumer','item_orderded','item_quantity','order_total']
 class SellerOrderSerializer(serializers.ModelSerializer):
+    seller = SellerSerializer()
+    farmer = FarmerSerializer()
     class Meta:
         model = SellerOrders
-        fields = ['seller','farmer','item_orderded','item_quantity','order_total']
+        fields = ['seller','farmer','item_ordered','item_quantity','order_total']
     

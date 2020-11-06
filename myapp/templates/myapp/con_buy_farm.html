@@ -23,20 +23,22 @@
     <h3 id="price_val">Price: </h3>
     <form class="" action="index.html" method="post">
       <label for="quantity"><h3>Select Quantity(in Kgs) :</h3></label>
-      <input type="number" id="quantity" name="" value="" min="0"><br><br>
-      <input class="payment" type="button" onclick="payment()" name="" value="Proceed to payment">
+      <input type="number" id="quantity" value="" min="0"><br><br>
+      <input class="payment" type="button" onclick="payment()" value="Proceed to payment">
     </form>
     </div>
     <div class="pay-section">
-      <h2></h2>
+      <h2>Please chose method of payment</h2>
+      <h2 id ="total">Total Payment:</h2>
       <input type="radio" name="payment" value="">Net Banking <br>
       <input type="radio" name="payment" value="">Cash on Delivery <br>
       <input type="radio" name="payment" value="">Credit/Debit Card <br><br>
-      <input class="buy" type="submit" name="" value="Buy">
+      <input class="buy" type="submit" onclick="buy()" name="" value="Buy">
     </div>
     <script>
       let id = "{{id}}";
-      
+      let userid = "{{request.user.id}}"
+      console.log(userid)
       function crop_detail(id) {
         fetch(`http://127.0.0.1:8000/crop_detail/${id}`)
         .then((resp)=>resp.json())
@@ -53,19 +55,35 @@
           city.innerHTML = 'City: ' + data.farmer.user.city;
           crop.innerHTML = 'Crop: ' + data.name;
           price.innerHTML = 'Price: Rs. ' + data.price + ' /Kg';
-
         })
       }
       crop_detail(id);
-
-
       function payment(){
-      document.getElementsByClassName('pay-section')[0].style.display='inline-block';
-      let price_total = document.querySelector('.pay-section h2');
-      let quant = document.getElementById('quantity').value;
-      let val = document.getElementById('price_val').innerHTML.slice(11,-4);
-      price_total.innerHTML = 'Total Payment: Rs. ' + (parseInt(val) * quant);
-}
+      
+      fetch(`http://127.0.0.1:8000/crop_detail/${id}`)
+        .then((resp)=>resp.json())
+        .then(function(data) {
+        
+         let total = document.getElementById('total');
+         let quantity = document.getElementById('quantity');
+         if(quantity.value<=data.quantity)
+         {
+          document.getElementsByClassName('pay-section')[0].style.display='inline-block';
+          total.innerHTML ="Total Payment:₹" +data.price*quantity.value;
+         }
+         else {
+           alert("Thats more than what we have at the moment! We only have "+data.quantity+ " kgs of "+data.name+". Please order a lesser amount!");
+         }
+})
+      }
+      function buy(){
+        let quantity = document.getElementById('quantity');
+         fetch(`http://127.0.0.1:8000/consumer_buy/${userid}/${id}/${quantity.value}`)
+        .then((resp)=>resp.json())
+        .then(function(data) {
+          alert(data.message)
+        })
+      }
     </script>
   </body>
 </html>

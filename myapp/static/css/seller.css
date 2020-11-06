@@ -1,0 +1,121 @@
+h1,
+h3 {
+  text-align: center;
+  font-weight: 700px;
+  font-family: Impact, Charcoal, sans-serif;
+  color: #321f28;
+}
+
+h4 {
+  margin: 0px;
+  color: #321f28;
+}
+
+hr {
+  margin: 0px;
+}
+
+.left {
+  float: left;
+  width: 30%;
+  height: 40vh;
+  text-align: start;
+  margin-top: 65px;
+  margin-left: 50px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 40px;
+}
+
+.right {
+  background: rgba(226, 233, 232, 0.7);
+  float: right;
+  width: 700px;
+  height: 70vh;
+  margin-top: 40px;
+  margin-right: 150px;
+  margin-left: 0px;
+  padding: 30px;
+  text-align: start;
+}
+
+form {
+  padding-left: 30px;
+}
+
+table {
+  margin: 20px;
+}
+
+body {
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0.4)
+    ),
+    url("farmer1.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  /* overflow-y: hidden; */
+}
+
+button {
+  color: white;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 5px;
+  font-weight: 600;
+  background-color: #81b214;
+  margin: 0px;
+  width: 150px;
+}
+
+button:hover {
+  background-color: rgba(39, 105, 48, 0.7);
+  color: black;
+  border: 2px black;
+  transition: transform 0.2s ease-in-out;
+  transform: scale(1.08) !important;
+}
+
+table {
+  margin: auto;
+  margin-top: 50px;
+  background: white;
+}
+
+label {
+  font-family: Impact, Charcoal, sans-serif;
+  color: #321f28;
+}
+
+input,
+select {
+  font-size: medium;
+  width: 200px;
+  height: 30px;
+  border-radius: 2px;
+  border: 2px solid black;
+}
+
+input:focus {
+  border: 3px solid darkgreen;
+  background-color: rgba(96, 226, 113, 0.5);
+}
+
+.submit_button {
+  color: white;
+  border-radius: 10px;
+  font-weight: 800;
+  background-color: #81b214;
+  align-items: center;
+}
+
+.submit_button:hover {
+  background-color: rgba(39, 105, 48);
+  color: black;
+  transition: transform 0.2s ease-in-out;
+  transform: scale(1.08) !important;
+}

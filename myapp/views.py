@@ -6,6 +6,8 @@ from myapp.serializers import CropSerializer,RawSerializer,FarmerOrderSerializer
 #from django.http import HttpResponse
 from rest_framework.response import Response
 from django.contrib import messages
+from rest_framework.decorators import api_view
+from django.http import HttpResponse, JsonResponse
 # Create your views here.
 def register(request):
 	if request.method == 'POST':
@@ -76,7 +78,7 @@ def user_login(request):
 def user_logout(request):
 	auth.logout(request)
 	return redirect('user_login')
-
+#################################################CONSUMER VIEWS###########################################################################
 def home_page(request):
 	if request.user.is_authenticated:
 		return render(request,'myapp/con_page.html')
@@ -88,21 +90,26 @@ class CropListView(APIView):
 		crops = Crops.objects.all()
 		serializer = CropSerializer(crops, many=True)
 		return Response(serializer.data)
-
-def consumer_buy(request,cropid,quant):
+@api_view(("GET",))
+def consumer_buy(request,id,cropid,quant):
+	print(type(id))
 	crop = get_object_or_404(Crops, pk = cropid)
 	crop.quantity -= quant
 	if crop.quantity <=0:
 		print("Stock now zero")
+		crop.quantity = 0
 	crop.save()
 	order = FarmerOrders()
-	order.consumer = request.user
+	user = get_object_or_404(User,pk=id)
+	print(user.mid_name)
+	consumer = Consumer.objects.all()[0]
+	order.consumer = consumer
 	order.farmer = crop.farmer
 	order.item_ordered = crop.name
 	order.item_quantity = quant
 	order.order_total = quant*crop.price
 	order.save()
-	return HttpResponse("Items Sold Successfully")
+	return JsonResponse({'message':"Items bought successfully!"})
 
 class SelectedCrops(APIView):
 
@@ -124,52 +131,88 @@ class CropDetail(APIView):
 
 def crop_detail_page(request,id):
 	return render(request,'myapp/con_buy_farm.html',{'id':id})
+#################################################CONSUMER VIEWS END######################################################################
 ##################################################FARMER VIEWS######################################################################
+def farmer_home(request):
+	return render(request,'myapp/farm2.html')
+
 def create_crop(request):
 	ncrop = Crops()
-	ncrop.name = request.POST['name']
-	ncrop.farmer = request.user
-	ncrop.state = request.user.User.state
-	ncrop.price = request.user.POST['price']
-	ncrop.quantity = request.user.POST['quantity']
+	ncrop.name = request.POST['crop']
+	farmer = Farmer.objects.filter(user = request.user)[0]
+	ncrop.farmer = farmer
+	ncrop.state = farmer.user.state
+	ncrop.price = request.user.POST['crop-price']
+	ncrop.quantity = request.user.POST['crop-qty']
 	ncrop.save()
-	return HttpResponse("New Crop Added successfully")
+	return redirect('all_crops')
 
 def add_quantity(request):
-	crop = Crops.objects.filter(name = request.POST['name'])
-	crop.quantity += request.POST['quantity']
-	return HttpResponse("Crops updated successfully")
-#######################################################FARMER VIEWS END##################################################################
-
-#######################################################SELLER VIEWS START################################################################
-class RawListView(APIView):
+	farmers = Farmer.objects.filter(user = request.user)[0]
+	crop = Crops.objects.filter(name = request.POST['crop'], farmer=farmers)
+	crop.quantity += request.POST['crop-qty']
+	return redirect('all_crops')
+class FarmerOrderView(APIView):
 	def get(self,request):
-		raw = Raw.objects.all()
-		serializer = RawSerializer(raw,many=True)
-		return Response(serializer.data)
-
+		farmers = Farmer.objects.filter(user = request.user)[0]
+		f_orders = FarmerOrders.objects.filer(farmer = farmers)
+		serializer = FarmerOrderSerializer(f_orders,many = True)
+		return  Response(serializer.data)
+@api_view(("GET",))
 def farmer_buy(request,id,quant):
 	item = get_object_or_404(Raw,pk=id)
 	item.quantity -= quant
 	item.save()
 	order = SellerOrders()
 	order.seller = item.seller
-	order.farmer = request.user
+	farmer = Farmer.objects.filer(user=request.user)[0]
+	order.farmer = farmer
 	order.item_ordered = item.name
 	order.item_quantity = quant
 	order.order_total = quant*item.price
 	order.save()
-	
+	return JsonResponse({'message':"Items bought successfully!"})
+
+class FarmerCropView(APIView):
+	def get(self,request,id):
+		userr = get_object_or_404(User, pk=id)
+		farmers = Farmer.objects.filter(user=userr)[0]
+		crop = Crops.objects.filter(seller = sellers)
+		serializer = CropSerializer(crop,many=True)
+		return Response(serializer.data)
+
+
+#######################################################FARMER VIEWS END##################################################################
+
+#######################################################SELLER VIEWS START################################################################
+class RawListView(APIView): 
+	def get(self,request,id):
+		userr = get_object_or_404(User, pk=id)
+		sellers = Seller.objects.filter(user=userr)[0]
+		raw = Raw.objects.filter(seller = sellers)
+		serializer = RawSerializer(raw,many=True)
+		return Response(serializer.data)
+
 # def create_raw(request):
-
-class FarmerOrderView(APIView):
-	def get(self,request):
-		f_orders = FarmerOrders.objects.all()
-		serializer = FarmerOrderSerializer(f_orders,many = True)
-		return  Response(serializer.data)
-
 class SellerOrderView(APIView):
-	def get(self,request):
-		s_orders = SellerOrders.objects.all()
+	def get(self,request,id):
+		userr = get_object_or_404(User,pk = id)
+		sellers = Seller.objects.filter(user = userr)[0]
+		s_orders = SellerOrders.objects.filter(seller = sellers)
 		serializer = SellerOrderSerializer(s_orders,many=True)
-		return Response(serializer.data) 
+		return Response(serializer.data)
+def seller_home(request):
+	return render(request,'myapp/seller.html')
+
+def create_raw(request):
+	raw = Raw()
+	raw.name = request.POST['raw_name']
+	seller = Seller.objects.filter(user = request.user)[0]
+	raw.seller = seller
+	raw.price = request.POST['price_raw']
+	raw.state = seller.user.state
+	raw.quantity = request.POST['raw_quantity']
+	raw.raw_type = request.POST['raw_name'].split()[-1].title()
+	raw.save()
+	return redirect('seller_home')
+###############################################################SELLER VIEWS END###########################################################
