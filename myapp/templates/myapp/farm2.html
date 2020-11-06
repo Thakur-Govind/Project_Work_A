@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Farmer</title>
+    <link rel="stylesheet" href={% static 'css/farme.css' %}>
+    <script src={% static 'js/farmer.js' %} charset="utf-8"></script>
+  </head>
+  <body onload="loadpage()">
+    <header>
+      <button type="button" class="home but" name="button">Home</button>
+      <button type="button" class="logout but" name="button">Logout</button>
+    </header><br>
+  <h1>WELCOME, FARMER-NAME</h1>
+  <div class="left">
+    <h3>SELECT OPTION</h3><hr>
+    <h4>To add new crop</h4>
+    <button type="button" onclick="showform('add_crop','upd_quant','order','crop_table','buy_raw')" name="button">Add Crop</button><br><br><hr>
+    <h4>To update crop quantity</h4>
+    <button type="button" onclick="showform('upd_quant','add_crop','order','crop_table','buy_raw')" name="button">Update Quantity Crop</button><br><br><hr>
+    <h4>To get all crop</h4>
+    <button type="button" onclick="showform('order','add_crop','upd_quant','crop_table','buy_raw')" name="button">My Crops</button><br><br><hr>
+    <h4>To place order for pesticides/fertilizers</h4>
+    <button type="button" onclick="showform('crop_table','add_crop','upd_quant','order','buy_raw')" name="button">Customer Order</button><br><br><hr>
+    <h4>To buy raw material</h4>
+    <button type="button" onclick="showform('buy_raw','add_crop','upd_quant','order','crop_table')" name="button">Buy Raw Material</button><br><br>
+  </div>
+  <div class="right">
+    <div class="add_crop">
+      <form class="" action={% url 'create_crop' %} method="post">
+
+        <select class="" name="Season">
+          <option value="">Select-Season</option>
+          <option value="Winter">Winter</option>
+          <option value="Summer">Summer</option>
+          <option value="Rainy">Rainy</option>
+          <option value="Spring">Spring</option>
+          <option value="Autumn">Autumn</option>
+        </select><br><br>
+        <label for="farm-crop">Crop:</label>
+        <input type="text" name="crop" id="farm-crop" value=""><br><br>
+        <label for="farm-crop-qty">Quantity:</label>
+        <input type="number" name="crop-qty" id="farm-crop-qty" min="0" value=""><br><br>
+        <label for="farm-crop-price">Price(Rs):</label>
+        <input type="text" name="crop-price" id="farm-crop-price" value=""><br><br>
+        <input class="submit_button" type="submit" name="" value="Add Crop">
+      </form>
+    </div>
+    <div class="upd_quant">
+      <form class="" action={% url 'add_crops' %} method="post">
+        <label for="farm-crop">Crop:</label>
+        <input type="text" name="crop" id="farm-crop" value=""><br><br>
+        <label for="farm-crop-up-qty">Update Quantity:</label>
+        <input type="number" name="crop-qty" id="farm-crop-up-qty" min="0" value=""><br><br>
+        <input class="submit_button" type="submit" name="" value="Update Quantity">
+      </form>
+    </div>
+    <div class="order">
+
+      <table id="cropdetails" border="1px solid black">
+        <tr>
+          <th>Crops</th>
+          <th>Season</th>
+          <th>Quantity(kg)</th>
+        </tr>
+        <tr>
+          <td>Wheat</td>
+          <td>Winter</td>
+          <td>500</td>
+        </tr>
+        <tr>
+          <td>Rice</td>
+          <td>Rainy</td>
+          <td>400</td>
+        </tr>
+      </table>
+
+    </div>
+    <div class="crop_table">
+
+      <table id ="farmerorders" border="1px solid black">
+        <tr>
+          <th>Cutomer-ID</th>
+          <th>Customer-Name</th>
+          <th>Mobile No.</th>
+          <th>Grand Total(Rs)</th>
+          <th>Crop</th>
+          <th>Payment Method</th>
+        </tr>
+        <tr>
+          <td>23456</td>
+          <td>Rahul Bajaj Roy</td>
+          <td>2345543223</td>
+          <td>500</td>
+          <td>Rice</td>
+          <td>Debit Card</td>
+        </tr>
+      </table>
+    </div>
+    <div class="buy_raw">
+      <form class="" action="raw_material.html" method="post">
+        <input type="radio" name="raw" id="pest" value="">
+        <label for="pest">Pesticide</label><br>
+        <input type="radio" name="raw" id="ferti" value="">
+        <label for="ferti">Fertilizer</label><br>
+        <input type="radio" name="raw" id="seed" value="">
+        <label for="seed">Seeds</label><br><br>
+        <input class="submit_button" type="submit"  name="" value="Buy Raw Material">
+      </form>
+    </div>
+  </div>
+  </body>
+</html>

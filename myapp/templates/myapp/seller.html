@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+      <script src={% static 'js/seller.js' %} charset="utf-8"></script>
+    <title>Seller Feature</title>
+    <link rel="stylesheet" href= {% static 'css/seller.css' %}>
+
+  </head>
+  <body onload="loadpage()">
+<h1>Seller Features</h1>
+<div class="left">
+  <h2>Select option</h2><hr>
+  <h4>Display current on-sale products</h4>
+  <button type="button" id="rawmats" onclick="showform('my_product','my_order','add_raw_mat')" name="button">My Products</button><br><br><hr>
+  <h4>Display orders</h4>
+  <button type="button" id ="orders" onclick="showform('my_order','my_product','add_raw_mat')" name="button">Farmer's Order</button><br><br><hr>
+  <h4>Add material for sale</h4>
+  <button type="button" onclick="showform('add_raw_mat','my_product','my_order')" name="button">Raw Material</button><br><br>
+</div>
+<div class="right">
+  <div class="my_product">
+    <table id="rawdetails" border="1px solid black">
+      <tr>
+        <th>Raw Material Name</th>
+        <th>Price(Rs per kg)</th>
+        <th>Quantity(kg)</th>
+      </tr>
+      <tr>
+        <td>Urea</td>
+        <td>750</td>
+        <td>100</td>
+      </tr>
+    </table>
+  </div>
+  <div class="my_order">
+    <table id = "seller_orders" border="1px solid black">
+      <tr>
+        <th>Farmer-ID</th>
+        <th>Farmer-Name</th>
+        <th>Aadhar No.</th>
+        <th>Item Ordered</th>
+        <th>Quantity(kg)</th>
+        <th>Total Price(Rs)</th>
+        <th>City</th>
+      </tr>
+      <tr>
+        <td>56789</td>
+        <td>Lalu Lal Bihari</td>
+        <td>7654334567</td>
+        <td>50</td>
+        <td>21/3/2020 12:00:00</td>
+        <td>500</td>
+      </tr>
+    </table>
+  </div>
+  <div class="add_raw_mat">
+    <form class="" action= {% url 'new_raw' %} method="POST">
+    {% csrf_token %}
+      <label for="raw-name"> Name:</label>
+      <input type="text" id="raw-name" name="raw_name" value=""><br><br>
+      <label for="price_raw">Price(Rs):</label>
+      <input type="text" id="price_raw" name="price_raw" value=""><br><br>
+      <label for="raw_quantity">Stock Quantity</label>
+      <input type="number" name="raw_quantity" id="raw_quantity" min="0" value=""><br><br>
+      <input class="submit_button" type="submit" name="" value="Add Raw Material">
+    </form>
+  </div>
+
+</div>
+<script>
+    document.getElementById("orders").addEventListener("click", view_seller_orders);
+    let userid = {{request.user.id}}
+      function view_seller_orders() {
+        fetch(`http://127.0.0.1:8000/seller_orders/${userid}`)
+        .then((resp)=>resp.json())
+        .then(function(data) {
+          //console.log(data);
+          let t = document.getElementById('seller_orders');
+          for(let i=1;i<t.rows.length;i++) {
+            t.deleteRow(i);
+          }
+          data.forEach(function(order) {
+            console.log(order);
+            
+            let tr = document.createElement("tr");
+            let td1 = document.createElement("td");
+            let td2 = document.createElement("td");
+            let td3 = document.createElement("td");
+            let td4 = document.createElement("td");
+            let td5 = document.createElement("td");
+            let td6 = document.createElement("td");
+            let td7 = document.createElement("td");
+            td1.innerHTML = order.farmer.user.id;
+            tr.appendChild(td1);
+            td2.innerHTML = order.farmer.user.first_name;
+            tr.appendChild(td2);
+            td3.innerHTML = order.farmer.user.aadhar_no;
+            tr.appendChild(td3);
+            td4.innerHTML = order.item_ordered;
+            tr.appendChild(td4);
+            td5.innerHTML = order.item_quantity;
+            tr.appendChild(td5);
+            td6.innerHTML = order.order_total;
+            tr.appendChild(td6);
+            td7.innerHTML = order.farmer.user.city;  
+            tr.appendChild(td7);
+            t.appendChild(tr);
+
+          })
+        })
+      }
+    document.getElementById("rawmats").addEventListener("click", view_raw);
+
+      function view_raw() {
+        fetch(`http://127.0.0.1:8000/raw_details/${userid}`)
+        .then((resp)=>resp.json())
+        .then(function(data) {
+          //console.log(data);
+          let t = document.getElementById('rawdetails');
+          for(let i=1;i<t.rows.length;i++) {
+            t.deleteRow(i);
+          }
+          data.forEach(function(raw) {
+            console.log(raw);
+            
+            let tr = document.createElement("tr");
+            let td1 = document.createElement("td");
+            let td2 = document.createElement("td");
+            let td3 = document.createElement("td");
+            td1.innerHTML = raw.name;
+            tr.appendChild(td1);
+            td2.innerHTML = raw.price;
+            tr.appendChild(td2);
+            td3.innerHTML = raw.quantity;
+            tr.appendChild(td3);
+            t.appendChild(tr);
+
+          })
+        })
+      }  
+</script>
+  </body>
+
+</html>
