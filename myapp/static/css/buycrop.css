@@ -1,3 +1,4 @@
+/*
 .pay-section {
   position: fixed;
   background: rgba(255, 255, 255, 0.8);
@@ -13,7 +14,7 @@
   padding: 25px;
   margin-top: 100px;
 }
-
+*/
 body {
   background: linear-gradient(
       rgba(255, 255, 255, 0.4),
@@ -28,7 +29,7 @@ body {
   margin: auto;
   padding: 10px;
 }
-
+/*
 #quantity {
   width: 165px;
   height: 25px;

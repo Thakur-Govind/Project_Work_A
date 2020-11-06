@@ -142,7 +142,7 @@ img {
   </style>
   <body >
 
-      <button type="button" class="home Buy" name="button">Home</button>
+      <button type="button" onclick="location.href='{% url 'home_page' %}'" class="home Buy" name="button">Home</button>
       <button type="button" onclick="location.href='{% url 'user_logout' %}'" class="logout Buy" name="button">Logout</button>
 
       <h2>Welcome User, {{user.username}}</h2>
