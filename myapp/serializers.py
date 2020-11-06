@@ -24,7 +24,7 @@ class CropSerializer(serializers.ModelSerializer):
     class Meta:
         model = Crops
         fields = ['id','name','farmer','state','price','quantity','crop_type']
-        fields = ['name','farmer','state','price','quantity','crop_type']
+        #fields = ['name','farmer','state','price','quantity','crop_type']
 class RawSerializer(serializers.ModelSerializer):
     seller = SellerSerializer()
     class Meta:

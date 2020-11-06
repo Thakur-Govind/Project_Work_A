@@ -8,14 +8,19 @@
     <script src="{% static 'js/consumer.js' %}" charset="utf-8"></script>
   </head>
   <body onload="initialize()">
+    <header>
+      <button type="button" class="home but" name="button">Home</button>
+      <button type="button" onclick="location.href='{% url 'user_logout' %}'" class="logout but" name="button">Logout</button>
+    </header>
+
     <div class="qty-section">
 
     <h3 id="farmer_val">Farmer: </h3>
     <!--<h3 id="phone_val">Mobile No: </h3>-->
-    <h3 id="state_val">State: /h3>
+    <h3 id="state_val">State: </h3>
     <h3 id="city_val">City: </h3>
-    <h3 id="crop_val">Crop: /h3>
-    <h3 id="price_val">Price: /h3>
+    <h3 id="crop_val">Crop: </h3>
+    <h3 id="price_val">Price: </h3>
     <form class="" action="index.html" method="post">
       <label for="quantity"><h3>Select Quantity(in Kgs) :</h3></label>
       <input type="number" id="quantity" name="" value="" min="0"><br><br>
@@ -23,8 +28,7 @@
     </form>
     </div>
     <div class="pay-section">
-      <h2>Order ID: 23456</h2>
-      <h2>Total Payment:Rs 460</h2>
+      <h2></h2>
       <input type="radio" name="payment" value="">Net Banking <br>
       <input type="radio" name="payment" value="">Cash on Delivery <br>
       <input type="radio" name="payment" value="">Credit/Debit Card <br><br>
@@ -53,6 +57,15 @@
         })
       }
       crop_detail(id);
+
+
+      function payment(){
+      document.getElementsByClassName('pay-section')[0].style.display='inline-block';
+      let price_total = document.querySelector('.pay-section h2');
+      let quant = document.getElementById('quantity').value;
+      let val = document.getElementById('price_val').innerHTML.slice(11,-4);
+      price_total.innerHTML = 'Total Payment: Rs. ' + (parseInt(val) * quant);
+}
     </script>
   </body>
 </html>
