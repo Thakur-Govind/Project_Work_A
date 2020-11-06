@@ -21,5 +21,10 @@ urlpatterns = [
     path('create_raw',create_raw,name = "new_raw"),
     path('farmer',farmer_home,name = 'farmer_home'),
     path('farmer_crops/<int:id>',FarmerCropView.as_view(), name = 'farmer_crops'),
+    path('farmer_shop',farmer_shop,name= 'farmer_shop'),
+    path('raw_detail_page/<int:id>',raw_detail,name='raw_detail_page'),
+    path('raw_detail/<int:id>',RawDetail.as_view(), name = 'raw_detail'),
+    path('all_raw',AllRawView.as_view(), name='all_raws'),
+    path('farmer_buy/<int:id>/<int:rawid>/<int:quant>',farmer_buy,name = 'farmer_buy'),
 
 ]

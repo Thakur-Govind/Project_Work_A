@@ -12,7 +12,7 @@
       <button type="button" class="home but" name="button">Home</button>
       <button type="button" class="logout but" name="button">Logout</button>
     </header><br>
-  <h1>WELCOME, FARMER-NAME</h1>
+  <h1>WELCOME, {{request.user.username}}</h1>
   <div class="left">
     <h3>SELECT OPTION</h3><hr>
     <h4>To add new crop</h4>
@@ -101,15 +101,17 @@
       </table>
     </div>
     <div class="buy_raw">
-      <form class="" action="raw_material.html" method="post">
-        <input type="radio" name="raw" id="pest" value="">
+      {% comment %}<form class="" action="raw_material.html" method="post">
+         <input type="radio" name="raw" id="pest" value="">
         <label for="pest">Pesticide</label><br>
         <input type="radio" name="raw" id="ferti" value="">
         <label for="ferti">Fertilizer</label><br>
         <input type="radio" name="raw" id="seed" value="">
-        <label for="seed">Seeds</label><br><br>
+        <label for="seed">Seeds</label><br><br> 
         <input class="submit_button" type="submit"  name="" value="Buy Raw Material">
       </form>
+      {% endcomment %}
+     <a href = {% url 'farmer_shop' %} <button class = "shop_submit_button">Buy Raw Material</button></a> 
     </div>
   </div>
 
@@ -123,7 +125,7 @@
         fetch(`http://127.0.0.1:8000/farmer_crops/${id}`)
         .then((resp)=>resp.json())
         .then(function(data) {
-          //console.log(data);
+          console.log(data);
           let t = document.getElementById('cropdetails');
           //$('#farmer_table:not(:first)').remove();
           for(let i=1;i<t.rows.length;i++) {
@@ -154,7 +156,7 @@
         fetch(`http://127.0.0.1:8000/farmer_orders/${userid}`)
         .then((resp)=>resp.json())
         .then(function(data) {
-          //console.log(data);
+          console.log(data);
           let t = document.getElementById('farmer_orders');
           for(let i=1;i<t.rows.length;i++) {
             t.deleteRow(i);

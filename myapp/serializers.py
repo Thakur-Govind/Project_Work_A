@@ -33,7 +33,7 @@ class RawSerializer(serializers.ModelSerializer):
     seller = SellerSerializer()
     class Meta:
         model = Raw
-        fields = ['name','seller','state','price','quantity','raw_type']
+        fields = ['id','name','seller','state','price','quantity','raw_type']
 class FarmerOrderSerializer(serializers.ModelSerializer):
     farmer = FarmerSerializer()
     consumer = ConsumerSerializer()

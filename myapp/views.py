@@ -81,6 +81,10 @@ def user_logout(request):
 #################################################CONSUMER VIEWS###########################################################################
 def home_page(request):
 	if request.user.is_authenticated:
+		if request.user.is_farmer == True:
+			return redirect('farmer_home')
+		elif request.user.is_seller == True:
+			return redirect('seller_home')
 		return render(request,'myapp/con_page.html')
 	else:
 		return HttpResponse("Not logged in.")
@@ -102,7 +106,7 @@ def consumer_buy(request,id,cropid,quant):
 	order = FarmerOrders()
 	user = get_object_or_404(User,pk=id)
 	print(user.mid_name)
-	consumer = Consumer.objects.all()[0]
+	consumer = Consumer.objects.filter(user=user)[0]
 	order.consumer = consumer
 	order.farmer = crop.farmer
 	order.item_ordered = crop.name
@@ -149,14 +153,14 @@ def create_crop(request):
 		ncrop.save()
 	else:
 		crop = Crops.objects.filter(name = request.POST['crop'], farmer=farmers)[0]
-		crop.quantity += int(request.POST['crop-qty'])
+		crop.quantity = int(request.POST['crop-qty'])
 		crop.save()
 	return redirect('farmer_home')
 
 def add_quantity(request):
 	farmers = Farmer.objects.filter(user = request.user)[0]
 	crop = Crops.objects.filter(name = request.POST['crop'], farmer=farmers)[0]
-	crop.quantity += int(request.POST['crop-qty'])
+	crop.quantity = int(request.POST['crop-qty'])
 	crop.save()
 	return redirect('farmer_home')
 class FarmerOrderView(APIView):
@@ -167,13 +171,14 @@ class FarmerOrderView(APIView):
 		serializer = FarmerOrderSerializer(f_orders,many = True)
 		return  Response(serializer.data)
 @api_view(("GET",))
-def farmer_buy(request,id,quant):
-	item = get_object_or_404(Raw,pk=id)
+def farmer_buy(request,id,rawid,quant):
+	item = get_object_or_404(Raw,pk=rawid)
 	item.quantity -= quant
 	item.save()
 	order = SellerOrders()
 	order.seller = item.seller
-	farmer = Farmer.objects.filer(user=request.user)[0]
+	userr = get_object_or_404(User,pk=id)
+	farmer = Farmer.objects.filter(user=userr)[0]
 	order.farmer = farmer
 	order.item_ordered = item.name
 	order.item_quantity = quant
@@ -189,6 +194,11 @@ class FarmerCropView(APIView):
 		serializer = CropSerializer(crop,many=True)
 		return Response(serializer.data)
 
+def farmer_shop(request):
+	farmer = Farmer.objects.filter(user = request.user)
+	return render(request,'myapp/farmer_shop.html',{'farmer':farmer})
+def raw_detail(request,id):
+    	return render(request,'myapp/farm_buy_seller.html',{'id':id})
 
 #######################################################FARMER VIEWS END##################################################################
 
@@ -200,7 +210,12 @@ class RawListView(APIView):
 		raw = Raw.objects.filter(seller = sellers)
 		serializer = RawSerializer(raw,many=True)
 		return Response(serializer.data)
-
+class RawDetail(APIView):
+    
+	def get(self,request,id):
+		raw = Raw.objects.get(id=id)
+		serializer = RawSerializer(raw)
+		return Response(serializer.data)
 # def create_raw(request):
 class SellerOrderView(APIView):
 	def get(self,request,id):
@@ -223,4 +238,10 @@ def create_raw(request):
 	raw.raw_type = request.POST['raw_name'].split()[-1].title()
 	raw.save()
 	return redirect('seller_home')
+class AllRawView(APIView):
+	def get(self,request):
+		raw = Raw.objects.all()
+		serializer = RawSerializer(raw, many=True)
+		return Response(serializer.data)
+	
 ###############################################################SELLER VIEWS END###########################################################
