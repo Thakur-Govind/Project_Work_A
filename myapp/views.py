@@ -137,25 +137,33 @@ def farmer_home(request):
 	return render(request,'myapp/farm2.html')
 
 def create_crop(request):
-	ncrop = Crops()
-	ncrop.name = request.POST['crop']
 	farmer = Farmer.objects.filter(user = request.user)[0]
-	ncrop.farmer = farmer
-	ncrop.state = farmer.user.state
-	ncrop.price = request.user.POST['crop-price']
-	ncrop.quantity = request.user.POST['crop-qty']
-	ncrop.save()
-	return redirect('all_crops')
+	if not Crops.objects.filter(name=request.POST['crop'],farmer = farmer).exists():
+		ncrop = Crops()
+		ncrop.name = request.POST['crop']
+		farmer = Farmer.objects.filter(user = request.user)[0]
+		ncrop.farmer = farmer
+		ncrop.state = farmer.user.state
+		ncrop.price = request.POST['crop-price']
+		ncrop.quantity = request.POST['crop-qty']
+		ncrop.save()
+	else:
+		crop = Crops.objects.filter(name = request.POST['crop'], farmer=farmers)[0]
+		crop.quantity += int(request.POST['crop-qty'])
+		crop.save()
+	return redirect('farmer_home')
 
 def add_quantity(request):
 	farmers = Farmer.objects.filter(user = request.user)[0]
-	crop = Crops.objects.filter(name = request.POST['crop'], farmer=farmers)
-	crop.quantity += request.POST['crop-qty']
-	return redirect('all_crops')
+	crop = Crops.objects.filter(name = request.POST['crop'], farmer=farmers)[0]
+	crop.quantity += int(request.POST['crop-qty'])
+	crop.save()
+	return redirect('farmer_home')
 class FarmerOrderView(APIView):
-	def get(self,request):
-		farmers = Farmer.objects.filter(user = request.user)[0]
-		f_orders = FarmerOrders.objects.filer(farmer = farmers)
+	def get(self,request,id):
+		userr = get_object_or_404(User,pk = id)
+		farmers = Farmer.objects.filter(user = userr)[0]
+		f_orders = FarmerOrders.objects.filter(farmer = farmers)
 		serializer = FarmerOrderSerializer(f_orders,many = True)
 		return  Response(serializer.data)
 @api_view(("GET",))
@@ -177,7 +185,7 @@ class FarmerCropView(APIView):
 	def get(self,request,id):
 		userr = get_object_or_404(User, pk=id)
 		farmers = Farmer.objects.filter(user=userr)[0]
-		crop = Crops.objects.filter(seller = sellers)
+		crop = Crops.objects.filter(farmer = farmers)
 		serializer = CropSerializer(crop,many=True)
 		return Response(serializer.data)
 

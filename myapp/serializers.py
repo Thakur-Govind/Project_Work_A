@@ -5,7 +5,11 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields ='__all__'
-
+class ConsumerSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    class Meta:
+        model = Consumer
+        fields = ['user','consumer_type']
 
 class FarmerSerializer(serializers.ModelSerializer):
     user = UserSerializer()
@@ -14,7 +18,7 @@ class FarmerSerializer(serializers.ModelSerializer):
         fields = ['user', 'farmer_type']
 
 class SellerSerializer(serializers.ModelSerializer):
-    user = UserSerializer
+    user = UserSerializer()
     class Meta:
         model = Seller
         fields = ['user','seller_type']
@@ -32,9 +36,10 @@ class RawSerializer(serializers.ModelSerializer):
         fields = ['name','seller','state','price','quantity','raw_type']
 class FarmerOrderSerializer(serializers.ModelSerializer):
     farmer = FarmerSerializer()
+    consumer = ConsumerSerializer()
     class Meta:
         model = FarmerOrders
-        fields = ['farmer','consumer','item_orderded','item_quantity','order_total']
+        fields = ['farmer','consumer','item_ordered','item_quantity','order_total']
 class SellerOrderSerializer(serializers.ModelSerializer):
     seller = SellerSerializer()
     farmer = FarmerSerializer()
