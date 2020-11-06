@@ -31,19 +31,19 @@ def register(request):
 					email=email, username=username, password = password1, first_name = fname, last_name = lname, mid_name = mname, dob = dob,
 					pan_no = pan, aadhar_no = aadhaar, state = state, city = city
 					)
-				if 'type_farm' in request.POST:
+				if request.POST['type_farm']!='None':
 					user_type = request.POST['type_farm']
 					user.is_farmer = True
 					user.save()
 					farmer = Farmer.objects.create(user=user, farmer_type = user_type)
 					farmer.save()
-				elif 'type_cus' in request.POST:
+				elif request.POST['type_cus']!='None':
 					user_type = request.POST['type_cus']
 					user.is_consumer = True
 					user.save()
 					consumer = Consumer.objects.create(user=user, consumer_type = user_type)
 					consumer.save()
-				elif 'type_sel' in request.POST:
+				elif request.POST['type_sel']!='None':
 					user_type = request.POST['type_sel']
 					user.is_seller = True
 					user.save()
