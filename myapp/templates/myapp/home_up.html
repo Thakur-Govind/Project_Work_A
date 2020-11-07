@@ -10,11 +10,12 @@
 </head>
 
 <body onload="initialload()">
+  <h1>Farmer Portal</h1>
   <div class="starting_button">
-    <h1>Farmer Portal</h1>
+
     <form class="form_1" action="index.html" method="post">
-      <button type="button" onclick="useroption(1)" name="button">Login</button>
-      <button type="button" onclick="useroption(2)" name="register">Register</button><br><br>
+      <button class="log_but" type="button" onclick="useroption(1)" name="button">Login</button>
+      <button class="reg_but" type="button" onclick="useroption(2)" name="register">Register</button><br><br>
     </form>
 
     <form class="user" action="index.html" method="post">
@@ -23,7 +24,16 @@
       <input class="user_selection" type="button" onclick="chooseradio(this.id)" name="user" value="Farmer" id="Farmer">
       <input class="user_selection" type="button" onclick="chooseradio(this.id)" name="user" value="Seller" id="Seller">
 
+
     </form>
+    <br><br>
+    <div class="intro">
+      <h3>About The Farmer Portal</h3>
+      <h3>This portal is to help farmers to gain the utmost profit from their crops by directly conecting them to their customers and other pesticides,fertilizer suppliers.</h3>
+      <h3>Farmer has to register themselves and put all the crops they grow.</h3>
+      <h3>Customer has to register and whenever they want to buy a crop they can just search the farmers according to the crops and their state.</h3>
+      <h3>There is a section seller who supplies raw material like seeds,fertilizers and pesticides.Farmer can directly buy these raw materials.</h3>
+    </div>
   </div>
 
   <div class="all_forms">
@@ -32,7 +42,7 @@
       <form class="register" action="/register" method="post">{% csrf_token %}
         <h2 class='reg_head'>Registration</h2>
         <input id="firstname" type="text" name="firstname" value="" placeholder="First Name">
-        <input id="middlename" type="text" name="middlename" value="" placeholder="Middle Name"><br>
+        <input id="middlename" type="text" name="middlename" value="" placeholder="Middle Name"><br><br>
         <input id="lastname" type="text" name="lastname" value="" placeholder="Last Name"><br><br>
         <input id="DOB" type="date" name="dob" value="">
         <label for="DOB">Date of Birth</label><br><br>
@@ -42,7 +52,7 @@
         <input id="userID" type="text" name="username" value="" placeholder="User ID">
         <input id="email" type="email" name="email" value="" placeholder="Email ID"><br><br>
         <input id="password_reg" type="password" name="password_reg" value="" placeholder="Password">
-        <input id="conf_password_reg" type="password" name="conf_password_reg" value="" placeholder="Confirm Password"><br>
+        <input id="conf_password_reg" type="password" name="conf_password_reg" value="" placeholder="Confirm Password"><br><br>
         <select onchange="print_city('state', this.selectedIndex);" id="sts" name ="stt" class="form-control" required></select>
         <select  id ="state" name = "city" class="form-control" required></select><br><br>
         <script language="javascript">print_state("sts");</script>
@@ -50,13 +60,15 @@
         <div class="consumer">
 
           <select class="form-control" id="type_cus" name="type_cus">
+            <option selected value="None">Select one...</option>
             <option value="Consumer">Consumer</option>
             <option value="Retailer">Retailer</option>
           </select> <br><br>
         </div>
         <div class="farmer">
-          <br>
+
           <select class="form-control" id="type_farm" name="type_farm">
+            <option selected value="None">Select one...</option>
             <option value="food">Food</option>
             <option value="commercial">Commercial</option>
             <option value="both">Both</option>
@@ -67,13 +79,14 @@
 
 
           <select class="form-control" id="type_sel" name="type_sel">
+            <option selected value="None">Select one...</option>
             <option value="Pesticide">Pesticide</option>
             <option value="Fertilizer">Fertilizer</option>
             <option value="Seed">Seed</option>
           </select><br><br>
         </div>
         <!--<button type="" onclick="return validation()" name="button">Register</button>-->
-        <input class="register_button" type="submit" value="Register"> 
+        <input class="register_button" type="submit" value="Register">
       </form>
       <br>
     </div>

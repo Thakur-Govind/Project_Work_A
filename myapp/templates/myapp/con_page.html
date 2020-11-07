@@ -152,17 +152,7 @@ img {
         <input class="search_farmer" type="button" value="Search Farmer" onclick="selected_crops(this.form)"><br><br>
       </form>
 
-      <table border="1px solid black" id="farmer_table">
-        <tr>
-          <th>Farmer Firstname</th>
-          <th>Farmer Middlename</th>
-          <th>Farmer Lastname</th>
-          <th>Price per Kg</th>
-          <th>Total available quantity</th>
-          <th>City</th>
-          <th>Buy from this farmer</th>
-        </tr>
-      </table>
+      
     <div class="card">
       
     </div>
@@ -176,6 +166,9 @@ img {
     		.then(function(data) {
           let card = document.querySelector('.card');
           //console.log(div_el);
+          while (card.hasChildNodes()) {
+            card.removeChild(card.firstChild);
+          }
           data.forEach(function(obj) {
             //console.log(obj);
             let col = document.createElement('div');
@@ -214,43 +207,35 @@ img {
         .then((resp)=>resp.json())
         .then(function(data) {
           //console.log(data);
-          let t = document.getElementById('farmer_table');
-          //$('#farmer_table:not(:first)').remove();
-          for(let i=1;i<t.rows.length;i++) {
-            t.deleteRow(i);
+          let card = document.querySelector('.card');
+          while (card.hasChildNodes()) {
+            card.removeChild(card.firstChild);
           }
-          data.forEach(function(crop) {
-            console.log(crop);
-            
-            let tr = document.createElement("tr");
-            let td1 = document.createElement("td");
-            let td2 = document.createElement("td");
-            let td3 = document.createElement("td");
-            let td4 = document.createElement("td");
-            let td5 = document.createElement("td");
-            let td6 = document.createElement("td");
-            let td7 = document.createElement("td");
-            let a = document.createElement("a");
-            td1.innerHTML = crop.farmer.user.first_name;
-            tr.appendChild(td1);
-            td2.innerHTML = crop.farmer.user.mid_name;
-            tr.appendChild(td2);
-            td3.innerHTML = crop.farmer.user.last_name;
-            tr.appendChild(td3);
-            td4.innerHTML = crop.price;
-            tr.appendChild(td4);
-            td5.innerHTML = crop.quantity;
-            tr.appendChild(td5);
-            td6.innerHTML = crop.farmer.user.city;
-            tr.appendChild(td6);
-            let id = crop.id;
-            a.setAttribute("href","{% url 'crop_detail_page' 1 %}".replace(1,id));
-            a.innerHTML = "Buy";
-            td7.appendChild(a);
-            tr.appendChild(td7);
-            t.appendChild(tr);
-
-          })
+          data.forEach(function(obj) {
+            //console.log(obj);
+            let col = document.createElement('div');
+            col.setAttribute('class','column');
+            let cont = document.createElement('div');
+            cont.setAttribute('class','container');
+            let img = document.createElement('img');
+            //  img.setAttribute('alt','farmer');
+            img.setAttribute('src','static/css/crop.jpg');
+            let name = document.createElement('h3');
+            name.innerHTML = 'Crop Name: ' + obj.name;
+            let price = document.createElement('h4');
+            price.innerHTML = 'Price: ' + obj.price;
+            let button = document.createElement('input');
+            button.setAttribute('class','Buy');
+            button.setAttribute('type','button');
+            button.setAttribute('value','Buy');
+            button.setAttribute('onclick','location.href="{% url 'crop_detail_page' 1 %}"'.replace(1,obj.id));
+            cont.appendChild(name);
+            cont.appendChild(price);
+            cont.appendChild(button);
+            col.appendChild(img);
+            col.appendChild(cont);
+            card.appendChild(col);
+          });
         })
       }
     </script>

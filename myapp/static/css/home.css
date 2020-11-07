@@ -1,5 +1,15 @@
-body {
-  overflow-y: hidden;
+h1 {
+  text-align: center;
+  color: white;
+  /* #fadcaa */
+  background-color: #81b214;
+  padding: 10px;
+  padding-bottom: 20px;
+  margin: -10px;
+}
+
+h3 {
+  color: #321f28;
 }
 
 .starting_button {
@@ -13,14 +23,19 @@ body {
 }
 
 .all_forms {
-  background: rgba(226, 231, 230, 0.5);
+  background: rgba(226, 233, 232, 0.7);
   display: inline-block;
   float: right;
   width: 500px;
-  height: 100vh;
+  height: 75vh;
   margin-top: 65px;
   margin-right: 120px;
   margin-left: 0px;
+}
+
+.intro {
+  background: rgba(226, 233, 232, 0.7);
+  padding: 15px;
 }
 
 .login_div {
@@ -42,13 +57,14 @@ body {
 .login_div label {
   font-size: 17px;
   font-family: Impact, Charcoal, sans-serif;
+  color: #321f28;
 }
 
 .login_button {
-  color: black;
+  color: white;
   border-radius: 10px;
   font-weight: 800;
-  background-color: rgba(39, 105, 48, 0.7);
+  background-color: #81b214;
   align-items: center;
 }
 
@@ -61,6 +77,7 @@ body {
 
 .log_head {
   font-family: Impact, Charcoal, sans-serif;
+  color: #321f28;
 }
 
 .registration_div {
@@ -77,30 +94,32 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  overflow-y: hidden;
 }
 
 h1 {
   font-size: 40px;
-  font-family: Impact, Charcoal, sans-serif;
+  font-family: Charcoal, sans-serif;
 }
 
 button,
 .user_selection {
-  color: black;
+  color: white;
   padding-left: 12px;
   padding-right: 12px;
   padding-top: 8px;
   padding-bottom: 8px;
-  border-radius: 10px;
+  border-radius: 5px;
   font-weight: 800;
-  background-color: rgba(39, 105, 48, 0.7);
+  background-color: #81b214;
   margin: 10px;
+  width: 150px;
 }
 
 button:hover {
-  background-color: black;
-  color: white;
-  border: cornsilk;
+  background-color: rgba(39, 105, 48, 0.7);
+  color: black;
+  border: 2px black;
   transition: transform 0.2s ease-in-out;
   transform: scale(1.08) !important;
 }
@@ -128,13 +147,14 @@ select {
 .register label {
   font-size: 17px;
   font-family: Impact, Charcoal, sans-serif;
+  color: #321f28;
 }
 
 .register_button {
-  color: black;
+  color: white;
   border-radius: 10px;
   font-weight: 800;
-  background-color: rgba(39, 105, 48, 0.7);
+  background-color: #81b214;
   align-items: center;
 }
 
@@ -147,4 +167,5 @@ select {
 
 .reg_head {
   font-family: Impact, Charcoal, sans-serif;
+  color: #321f28;
 }

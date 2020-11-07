@@ -37,7 +37,7 @@ def register(request):
 					user.save()
 					farmer = Farmer.objects.create(user=user, farmer_type = user_type)
 					farmer.save()
-				elif request.POST['type_cus']!='None':
+				elif request.POST['type_cus']!='None':	
 					user_type = request.POST['type_cus']
 					user.is_consumer = True
 					user.save()
