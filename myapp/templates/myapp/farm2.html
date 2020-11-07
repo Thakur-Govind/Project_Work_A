@@ -10,7 +10,7 @@
   <body onload="loadpage()">
     <header>
       <button type="button" class="home but" name="button">Home</button>
-      <button type="button" class="logout but" name="button">Logout</button>
+      <button type="button" onclick="location.href='{% url 'user_logout' %}'" class="logout but" name="button">Logout</button>
     </header><br>
   <h1>WELCOME, {{request.user.username}}</h1>
   <div class="left">

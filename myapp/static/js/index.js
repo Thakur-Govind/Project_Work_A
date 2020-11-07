@@ -22,23 +22,24 @@ function reg_log_option(a,b,c){
   }
 
 }
-
-function useroption(f){
-
-  var x=document.getElementsByClassName('user')[0];
-  x.style.display = 'block';
-  log_or_reg=f;
-    if(f==1){
-      document.getElementsByClassName('reg_but')[0].style.display='none';
-    }
-    else if(f==2){
-      document.getElementsByClassName('log_but')[0].style.display='none';
-    }
-    document.getElementsByClassName('login')[0].style.display='none';
-    document.getElementsByClassName('register')[0].style.display='none';
-
-    document.getElementById(user).checked=false;
-}
+//
+//function useroption(f){
+//  console.log('here');
+//  var x=document.getElementsByClassName('user')[0];
+//  x.style.display = 'block';
+//  log_or_reg=f;
+//    if(f==1){
+//      document.getElementsByClassName('reg_but')[0].style.display='none';
+//    }
+//    else if(f==2){
+//      document.getElementsByClassName('log_but')[0].style.display='none';
+//    }
+//    document.getElementsByClassName('login')[0].style.display='none';
+//    document.getElementsByClassName('register')[0].style.display='none';
+//
+//    document.getElementById(user).checked=false;
+//    
+//}
 
 
 

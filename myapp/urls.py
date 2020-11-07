@@ -4,7 +4,7 @@ from .views import register, user_login, user_logout, home_page, CropListView, S
 from .views import *
 urlpatterns = [
     path('register',register,name='register'),
-    path('user_login',user_login,name='user_login'),
+    path('',user_login,name='user_login'),
     path('user_logout',user_logout, name='user_logout'),
     path('home_page',home_page, name='home_page'),
     path('all_crops',CropListView.as_view(), name='all_crops'),
