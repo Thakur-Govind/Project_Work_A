@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Consumer Page</title>
+    <link rel="stylesheet" href="{% static 'css/consumerstyles.css' %}">
+    <script src="{% static 'js/cities.js' %}" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <style>
+    * {
+  box-sizing: border-box;
+}
+
+
+h2 {
+  font-size: xx-large;
+  margin-top: 50px;
+  margin-left: 33%;
+  font-family: Impact, Charcoal, sans-serif;
+}
+
+h3,
+h4 {
+  font-family: Impact, Charcoal, sans-serif;
+  font-weight: 500;
+}
+
+
+span {
+  font-size: 17px;
+  font-family: Impact, Charcoal, sans-serif;
+}
+
+img {
+  width: 100%;
+  height: 25%;
+  margin-top: 10px;
+}
+
+.card {
+  margin: 0;
+}
+
+
+.column {
+  background: rgba(39, 35, 35, 0.3);
+  float: left;
+  width: 30%;
+  padding: 0 10px;
+  margin: 15px;
+}
+
+.column:hover {
+  box-shadow: 6px 6px 6px 6px rgba(0, 0, 0, 0.7);
+  transition: 0.3s;
+}
+
+.container {
+  padding: 0px 8px;
+  text-align: start;
+  background-color: #f1f1f1;
+}
+
+.Buy {
+  color: white;
+  border-radius: 5px;
+  font-weight: 800;
+  background-color: #81b214;
+  width: 75px;
+  height: 30px;
+  margin: 5px;
+}
+
+.Buy:hover {
+  background-color: rgba(39, 105, 48);
+  color: black;
+  transition: transform 0.2s ease-in-out;
+  transform: scale(1.08) !important;
+}
+
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+.home {
+  float:left;
+}
+
+.logout{
+ float: right;
+}
+
+  </style>
+  <body >
+
+      <button type="button" onclick="location.href='{% url 'home_page' %}'" class="home Buy" name="button">Home</button>
+      <button type="button" onclick="location.href='{% url 'user_logout' %}'" class="logout Buy" name="button">Logout</button>
+
+      <h2>Welcome User, {{user.username}}</h2>
+
+    <div class="card">
+      
+    </div>
+
+
+    <script>
+    	all_crops();
+    	function all_crops() {
+    		fetch('http://127.0.0.1:8000/all_raw')
+    		.then((resp)=>resp.json())
+    		.then(function(data) {
+          let card = document.querySelector('.card');
+          //console.log(div_el);
+          data.forEach(function(obj) {
+            //console.log(obj);
+            let col = document.createElement('div');
+            col.setAttribute('class','column');
+            let cont = document.createElement('div');
+            cont.setAttribute('class','container');
+            let img = document.createElement('img');
+            //  img.setAttribute('alt','farmer');
+            img.setAttribute('src','static/css/crop.jpg');
+            let name = document.createElement('h3');
+            name.innerHTML = 'Item Name: ' + obj.name;
+            let price = document.createElement('h4');
+            price.innerHTML = 'Price: ' + obj.price;
+            let button = document.createElement('input');
+            button.setAttribute('class','Buy');
+            button.setAttribute('type','button');
+            button.setAttribute('value','Buy');
+            button.setAttribute('onclick','location.href="{% url 'raw_detail_page' 1 %}"'.replace(1,obj.id));
+            cont.appendChild(name);
+            cont.appendChild(price);
+            cont.appendChild(button);
+            col.appendChild(img);
+            col.appendChild(cont);
+            card.appendChild(col);
+          });
+          
+    		})
+      }
+      
+    </script>
+
+  </body>
+</html>

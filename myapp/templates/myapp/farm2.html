@@ -12,24 +12,24 @@
       <button type="button" class="home but" name="button">Home</button>
       <button type="button" class="logout but" name="button">Logout</button>
     </header><br>
-  <h1>WELCOME, FARMER-NAME</h1>
+  <h1>WELCOME, {{request.user.username}}</h1>
   <div class="left">
     <h3>SELECT OPTION</h3><hr>
     <h4>To add new crop</h4>
     <button type="button" onclick="showform('add_crop','upd_quant','order','crop_table','buy_raw')" name="button">Add Crop</button><br><br><hr>
     <h4>To update crop quantity</h4>
-    <button type="button" onclick="showform('upd_quant','add_crop','order','crop_table','buy_raw')" name="button">Update Quantity Crop</button><br><br><hr>
+    <button type="button"  onclick="showform('upd_quant','add_crop','order','crop_table','buy_raw')" name="button">Update Quantity Crop</button><br><br><hr>
     <h4>To get all crop</h4>
-    <button type="button" onclick="showform('order','add_crop','upd_quant','crop_table','buy_raw')" name="button">My Crops</button><br><br><hr>
+    <button type="button" id="displaycrops" onclick="showform('order','add_crop','upd_quant','crop_table','buy_raw')" name="button">My Crops</button><br><br><hr>
     <h4>To place order for pesticides/fertilizers</h4>
-    <button type="button" onclick="showform('crop_table','add_crop','upd_quant','order','buy_raw')" name="button">Customer Order</button><br><br><hr>
+    <button type="button" id = "orders" onclick="showform('crop_table','add_crop','upd_quant','order','buy_raw')" name="button">Customer Order</button><br><br><hr>
     <h4>To buy raw material</h4>
     <button type="button" onclick="showform('buy_raw','add_crop','upd_quant','order','crop_table')" name="button">Buy Raw Material</button><br><br>
   </div>
   <div class="right">
     <div class="add_crop">
       <form class="" action={% url 'create_crop' %} method="post">
-
+  {% csrf_token %}
         <select class="" name="Season">
           <option value="">Select-Season</option>
           <option value="Winter">Winter</option>
@@ -49,6 +49,7 @@
     </div>
     <div class="upd_quant">
       <form class="" action={% url 'add_crops' %} method="post">
+      {% csrf_token %}
         <label for="farm-crop">Crop:</label>
         <input type="text" name="crop" id="farm-crop" value=""><br><br>
         <label for="farm-crop-up-qty">Update Quantity:</label>
@@ -61,17 +62,17 @@
       <table id="cropdetails" border="1px solid black">
         <tr>
           <th>Crops</th>
-          <th>Season</th>
+          <th>Price</th>
           <th>Quantity(kg)</th>
         </tr>
         <tr>
           <td>Wheat</td>
-          <td>Winter</td>
+          <td>100</td>
           <td>500</td>
         </tr>
         <tr>
           <td>Rice</td>
-          <td>Rainy</td>
+          <td>200</td>
           <td>400</td>
         </tr>
       </table>
@@ -79,14 +80,15 @@
     </div>
     <div class="crop_table">
 
-      <table id ="farmerorders" border="1px solid black">
+      <table id ="farmer_orders" border="1px solid black">
         <tr>
           <th>Cutomer-ID</th>
           <th>Customer-Name</th>
-          <th>Mobile No.</th>
-          <th>Grand Total(Rs)</th>
+          <th>Adhaar No.</th>
           <th>Crop</th>
-          <th>Payment Method</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th>City</th>
         </tr>
         <tr>
           <td>23456</td>
@@ -99,16 +101,96 @@
       </table>
     </div>
     <div class="buy_raw">
-      <form class="" action="raw_material.html" method="post">
-        <input type="radio" name="raw" id="pest" value="">
+      {% comment %}<form class="" action="raw_material.html" method="post">
+         <input type="radio" name="raw" id="pest" value="">
         <label for="pest">Pesticide</label><br>
         <input type="radio" name="raw" id="ferti" value="">
         <label for="ferti">Fertilizer</label><br>
         <input type="radio" name="raw" id="seed" value="">
-        <label for="seed">Seeds</label><br><br>
+        <label for="seed">Seeds</label><br><br> 
         <input class="submit_button" type="submit"  name="" value="Buy Raw Material">
       </form>
+      {% endcomment %}
+     <a href = {% url 'farmer_shop' %} <button class = "shop_submit_button">Buy Raw Material</button></a> 
     </div>
   </div>
+
+
+
+  <script>
+  document.getElementById("displaycrops").addEventListener("click", view_crops);
+  function view_crops() {
+        //e.preventDefault();
+        let id = {{request.user.id}}
+        fetch(`http://127.0.0.1:8000/farmer_crops/${id}`)
+        .then((resp)=>resp.json())
+        .then(function(data) {
+          console.log(data);
+          let t = document.getElementById('cropdetails');
+          //$('#farmer_table:not(:first)').remove();
+          for(let i=1;i<t.rows.length;i++) {
+            t.deleteRow(i);
+          }
+          data.forEach(function(crop) {
+            console.log(crop);
+            
+            let tr = document.createElement("tr");
+            let td1 = document.createElement("td");
+            let td2 = document.createElement("td");
+            let td3 = document.createElement("td");
+            td1.innerHTML = crop.name;
+            tr.appendChild(td1);
+            td2.innerHTML = crop.price;
+            tr.appendChild(td2);
+            td3.innerHTML = crop.quantity;
+            tr.appendChild(td3);
+            t.appendChild(tr);
+          })
+        })
+      }
+
+      document.getElementById("orders").addEventListener("click", view_seller_orders);
+    let userid = {{request.user.id}}
+      function view_seller_orders() {
+        let userid = {{request.user.id}}
+        fetch(`http://127.0.0.1:8000/farmer_orders/${userid}`)
+        .then((resp)=>resp.json())
+        .then(function(data) {
+          console.log(data);
+          let t = document.getElementById('farmer_orders');
+          for(let i=1;i<t.rows.length;i++) {
+            t.deleteRow(i);
+          }
+          data.forEach(function(order) {
+            console.log(order);
+            
+            let tr = document.createElement("tr");
+            let td1 = document.createElement("td");
+            let td2 = document.createElement("td");
+            let td3 = document.createElement("td");
+            let td4 = document.createElement("td");
+            let td5 = document.createElement("td");
+            let td6 = document.createElement("td");
+            let td7 = document.createElement("td");
+            td1.innerHTML = order.consumer.user.id;
+            tr.appendChild(td1);
+            td2.innerHTML = order.consumer.user.first_name;
+            tr.appendChild(td2);
+            td3.innerHTML = order.consumer.user.aadhar_no;
+            tr.appendChild(td3);
+            td4.innerHTML = order.item_ordered;
+            tr.appendChild(td4);
+            td5.innerHTML = order.item_quantity;
+            tr.appendChild(td5);
+            td6.innerHTML = order.order_total;
+            tr.appendChild(td6);
+            td7.innerHTML = order.consumer.user.city;  
+            tr.appendChild(td7);
+            t.appendChild(tr);
+
+          })
+        })
+      }
+  </script>
   </body>
 </html>

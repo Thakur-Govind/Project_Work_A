@@ -102,6 +102,7 @@ label {
   font-weight: 800;
   background-color: #81b214;
   align-items: center;
+
 }
 
 .submit_button:hover {
@@ -110,7 +111,20 @@ label {
   transition: transform 0.2s ease-in-out;
   transform: scale(1.08) !important;
 }
-
+.shop_submit_button {
+  color: white;
+  border-radius: 10px;
+  font-weight: 800;
+  background-color: #81b214;
+  align-items: center;
+  padding:10px;
+}
+.shop_submit_button:hover {
+  background-color: rgba(39, 105, 48);
+  color: black;
+  transition: transform 0.2s ease-in-out;
+  transform: scale(1.08) !important;
+}
 table {
   background: white;
 }

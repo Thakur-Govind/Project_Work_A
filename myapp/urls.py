@@ -17,9 +17,14 @@ urlpatterns = [
     path('seller',seller_home, name='seller_home'),
     path('raw_details/<int:id>',RawListView.as_view(),name='raw_details'),
     path('seller_orders/<int:id>',SellerOrderView.as_view(),name= 'seller_orders'),
-    path('farmer_order',FarmerOrderView.as_view(),name= 'farmer_order'),
+    path('farmer_orders/<int:id>',FarmerOrderView.as_view(),name= 'farmer_order'),
     path('create_raw',create_raw,name = "new_raw"),
     path('farmer',farmer_home,name = 'farmer_home'),
-    path('farmer_crops',FarmerCropView.as_view(), name = 'farmer_crops')
+    path('farmer_crops/<int:id>',FarmerCropView.as_view(), name = 'farmer_crops'),
+    path('farmer_shop',farmer_shop,name= 'farmer_shop'),
+    path('raw_detail_page/<int:id>',raw_detail,name='raw_detail_page'),
+    path('raw_detail/<int:id>',RawDetail.as_view(), name = 'raw_detail'),
+    path('all_raw',AllRawView.as_view(), name='all_raws'),
+    path('farmer_buy/<int:id>/<int:rawid>/<int:quant>',farmer_buy,name = 'farmer_buy'),
 
 ]
